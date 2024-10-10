@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.koreaIT.BAM.dto.Article;
+import com.koreaIT.BAM.util.Util;
+
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("== 프로그램 시작 ==");
@@ -30,7 +33,7 @@ public class Main {
 				
 				lastArticleId++;
 				
-				Article article = new Article(lastArticleId, title, body);
+				Article article = new Article(lastArticleId, Util.getDateStr(), Util.getDateStr(), title, body);
 				
 				articles.add(article);
 				
@@ -42,10 +45,10 @@ public class Main {
 					continue;
 				}
 				
-				System.out.println("번호	|	제목");
+				System.out.println("번호	|	제목	|	작성일	");
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
-					System.out.printf("%d	|	%s\n", article.id, article.title);
+					System.out.printf("%d	|	%s	|	%s	\n", article.getId(), article.getTitle(), article.getRegDate());
 				}
 			} else if (cmd.startsWith("article detail ")) {
 				String[] cmdBits = cmd.split(" ");
@@ -62,7 +65,7 @@ public class Main {
 				Article foundArticle = null;
 				
 				for (Article article : articles) {
-					if (article.id == id) {
+					if (article.getId() == id) {
 						foundArticle = article;
 						break;
 					}
@@ -73,9 +76,11 @@ public class Main {
 					continue;
 				}
 				
-				System.out.printf("번호 : %d\n", foundArticle.id);
-				System.out.printf("제목 : %s\n", foundArticle.title);
-				System.out.printf("내용 : %s\n", foundArticle.body);
+				System.out.printf("번호 : %d\n", foundArticle.getId());
+				System.out.printf("작성일 : %s\n", foundArticle.getRegDate());
+				System.out.printf("수정일 : %s\n", foundArticle.getUpdateDate());
+				System.out.printf("제목 : %s\n", foundArticle.getTitle());
+				System.out.printf("내용 : %s\n", foundArticle.getBody());
 				
 			} else if (cmd.startsWith("article modify ")) {
 				String[] cmdBits = cmd.split(" ");
@@ -92,7 +97,7 @@ public class Main {
 				Article foundArticle = null;
 				
 				for (Article article : articles) {
-					if (article.id == id) {
+					if (article.getId() == id) {
 						foundArticle = article;
 						break;
 					}
@@ -108,8 +113,9 @@ public class Main {
 				System.out.printf("수정할 내용 : ");
 				String body = sc.nextLine();
 				
-				foundArticle.title = title;
-				foundArticle.body = body;
+				foundArticle.setTitle(title);
+				foundArticle.setBody(body);
+				foundArticle.setUpdateDate(Util.getDateStr());
 				
 				System.out.printf("%d번 게시물이 수정되었습니다\n", id);
 				
@@ -128,7 +134,7 @@ public class Main {
 				Article foundArticle = null;
 				
 				for (Article article : articles) {
-					if (article.id == id) {
+					if (article.getId() == id) {
 						foundArticle = article;
 						break;
 					}
@@ -151,17 +157,5 @@ public class Main {
 		sc.close();
 		
 		System.out.println("== 프로그램 끝 ==");
-	}
-}
-
-class Article {
-	int id;
-	String title;
-	String body;
-	
-	Article(int id, String title, String body) {
-		this.id = id;
-		this.title = title;
-		this.body = body;
 	}
 }
