@@ -47,8 +47,38 @@ public class Main {
 					Article article = articles.get(i);
 					System.out.printf("%d	|	%s\n", article.id, article.title);
 				}
+			} else if (cmd.startsWith("article detail ")) {
+				String[] cmdBits = cmd.split(" ");
+				
+				int id = 0;
+				
+				try {
+					id = Integer.parseInt(cmdBits[2]);
+				} catch (Exception e) {
+					System.out.println("올바른 형식이 아닙니다");
+					continue;
+				}
+				
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if (article.id == id) {
+						foundArticle = article;
+						break;
+					}
+				}
+				
+				if (foundArticle == null) {
+					System.out.printf("%d번 게시물은 존재하지 않습니다\n", id);
+					continue;
+				}
+				
+				System.out.printf("번호 : %d\n", foundArticle.id);
+				System.out.printf("제목 : %s\n", foundArticle.title);
+				System.out.printf("내용 : %s\n", foundArticle.body);
+			} else {
+				System.out.println("존재하지 않는 명령어 입니다");
 			}
-			
 		}
 		
 		sc.close();
