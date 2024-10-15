@@ -3,17 +3,26 @@ package com.koreaIT.BAM.controller;
 import java.util.Scanner;
 
 import com.koreaIT.BAM.service.MemberService;
+import com.koreaIT.BAM.util.Util;
 
-public class MemberController {
+public class MemberController extends Controller {
 
-	private Scanner sc;
-	private int lastMemberId;
 	private MemberService memberService;
 	
 	public MemberController(Scanner sc) {
 		this.sc = sc;
-		this.lastMemberId = 0;
-		memberService = new MemberService();
+		this.memberService = new MemberService();
+	}
+	
+	@Override
+	public void doAction(String cmd, String methodName) {
+		switch (methodName) {
+		case "join":
+			doJoin();
+			break;
+		default:
+			System.out.println("존재하지 않는 명령어 입니다");
+		}
 	}
 	
 	public void doJoin() {
@@ -73,24 +82,18 @@ public class MemberController {
 			break;
 		}
 
-		lastMemberId++;
+		lastId++;
 		
-		memberService.joinMember(lastMemberId, loginId, loginPw, name);
+		memberService.joinMember(lastId, Util.getDateStr(), loginId, loginPw, name);
 
 		System.out.printf("[ %s ] 님의 가입이 완료되었습니다\n", name);
 	}
+	
+	@Override
+	public void makeTestData() {
+		System.out.println("테스트용 회원 데이터 3개를 생성하였습니다");
+		for (int i = 1; i <= 3; i++) {
+			memberService.joinMember(++lastId, Util.getDateStr(), "test" + i, "test" + i, "유저" + i);
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

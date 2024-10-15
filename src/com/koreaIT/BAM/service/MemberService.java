@@ -14,20 +14,7 @@ public class MemberService {
 		return memberDao.isLoginIdDup(loginId);
 	}
 	
-	public void joinMember(int lastMemberId, String loginId, String loginPw, String name) {
-		memberDao.joinMember(lastMemberId, loginId, loginPw, name);
+	public void joinMember(int lastMemberId, String regDate, String loginId, String loginPw, String name) {
+		memberDao.joinMember(lastMemberId, regDate, loginId, loginPw, name);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

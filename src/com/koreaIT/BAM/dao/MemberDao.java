@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.koreaIT.BAM.dto.Member;
-import com.koreaIT.BAM.util.Util;
 
 public class MemberDao {
 
@@ -23,9 +22,8 @@ public class MemberDao {
 		return false;
 	}
 
-	public void joinMember(int lastMemberId, String loginId, String loginPw, String name) {
-		Member member = new Member(lastMemberId, Util.getDateStr(), loginId, loginPw, name);
+	public void joinMember(int lastMemberId, String regDate, String loginId, String loginPw, String name) {
+		Member member = new Member(lastMemberId, regDate, loginId, loginPw, name);
 		members.add(member);
 	}
-
 }
